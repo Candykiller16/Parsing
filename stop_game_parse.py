@@ -7,12 +7,12 @@ HOST = 'https://stopgame.ru'
 URL = 'https://stopgame.ru/review/new/izumitelno/p'
 CSV = 'cards.csv'
 
-def get_html(url, params=''):
+def get_html_form_url(url, params=''):
     r = requests.get(url, params=params)
     return r
 
 
-def get_content(html):
+def get_content_from_html(html):
     soup = BeautifulSoup(html, 'html.parser')
     items = soup.find_all('div', attrs={'class': 'item article-summary'})
     games = []
@@ -39,9 +39,9 @@ def save_doc(items, path):
 def parser():
     pages = input('Укажите количество страниц для парсинга: ')
     pages = int(pages.strip())
-    html = get_html(URL)
+    html = get_html_form_url(URL)
     if html.status_code == 200:
-        cards = [get_content(get_html(URL + str(page)).text) for page in range(1, pages+1)]
+        cards = [get_content_from_html(get_html_form_url(URL + str(page)).text) for page in range(1, pages+1)]
         # cards = []
         # for page in range(1, pages+1):
         #     print(f'Парсим страницу - {page}')
