@@ -37,17 +37,18 @@ def save_doc(items, path):
 
 
 def parser():
-    PAGENATION = input('Укажите количество страниц для парсинга: ')
-    PAGENATION = int(PAGENATION.strip())
+    pages = input('Укажите количество страниц для парсинга: ')
+    pages = int(pages.strip())
     html = get_html(URL)
     if html.status_code == 200:
-        cards = []
-        for page in range(1, PAGENATION+1):
-            print(f'Парсим страницу - {page}')
-            html = get_html(URL + str(page))
-            cards.extend(get_content(html.text))
-            # save_doc(cards, CSV)
-        print('Парсинг закончился')
+        cards = [get_content(get_html(URL + str(page)).text) for page in range(1, pages+1)]
+        # cards = []
+        # for page in range(1, pages+1):
+        #     print(f'Парсим страницу - {page}')
+        #     html = get_html(URL + str(page))
+        #     cards.extend(get_content(html.text))
+        #     # save_doc(cards, CSV)
+        # print('Парсинг закончился')
         return cards
     else:
         print('Error')
@@ -65,3 +66,4 @@ def into_json():
     with open('file.json', 'w', encoding='utf-8') as file:
         file.write(data)
 
+into_json()
