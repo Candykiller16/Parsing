@@ -11,7 +11,7 @@ with open('test.txt', 'w') as test:
 
         if len(items):
             for el in items:
-                title = el.select('.caption > a')
+                title = el.select('.prod__in > a')
                 test.write(title[0].text + '\n')
             page += 1
         else:
